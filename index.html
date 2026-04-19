@@ -62,6 +62,7 @@
         .btn-satisfy    { background-color: #ffffcc; }
         .btn-interested { background-color: #aaddff; }
         .btn-other      { background-color: #eeeeee; }
+        .btn-home { background: #888; margin-top: 25px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -112,6 +113,7 @@
             <button class="emotion-btn btn-interested">🤔 気になる</button>
             <button class="emotion-btn btn-other">❓ その他</button>
         </div>
+        <button class="btn-home" onclick="goHome()">🏠 ホームにもどる</button>
     </div>
 </div>
 
@@ -131,21 +133,21 @@
         panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
     }
 
+    // ④ 選んだ瞬間にパネルを自動で閉じる
     function setReservation() {
         reservedTask = document.getElementById('reserve-select').value;
         document.getElementById('reservation-status').innerText = reservedTask ? "※次回はこれを必ず出します" : "";
+        document.getElementById('reservation-panel').style.display = 'none';
     }
 
     function startLottery() {
         const display = document.getElementById('display');
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
-        const bonus = document.getElementById('bonus');
-        const emotion = document.getElementById('emotion-reflection');
 
         document.getElementById('reservation-panel').style.display = 'none';
-        bonus.style.display = 'none';
-        emotion.style.display = 'none';
+        document.getElementById('bonus').style.display = 'none';
+        document.getElementById('emotion-reflection').style.display = 'none';
         startBtn.style.visibility = 'hidden';
         stopBtn.style.visibility = 'visible';
 
@@ -164,6 +166,9 @@
                     display.innerText = tasks[Math.floor(Math.random() * tasks.length)];
                 }
                 startTimer();
+                // ① タイマースタートと同時におまけを表示
+                document.getElementById('bonus-task').innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
+                document.getElementById('bonus').style.display = 'block';
             }
         }, 100);
     }
@@ -187,31 +192,44 @@
         document.getElementById('timer-meter').style.width = (timeLeft / maxTime) * 100 + '%';
     }
 
+    // ③ 時間切れ → 振り返り全画面へ
     function endWork() {
         clearInterval(timerId);
         document.getElementById('chime').play();
-        showReflections();
+        showReflectionFullScreen();
     }
 
+    // ② 確認なし・即リセット
     function forceEnd() {
-        if (confirm("ワークを終了してリセットしますか？")) {
-            clearInterval(timerId);
-            document.getElementById('timer-text').innerText = "50";
-            document.getElementById('timer-meter').style.width = '100%';
-            document.getElementById('display').innerText = "ボタンをおしてね！";
-            document.getElementById('startBtn').style.visibility = 'visible';
-            document.getElementById('stopBtn').style.visibility = 'hidden';
-            showReflections();
-        }
+        clearInterval(timerId);
+        goHome();
     }
 
-    function showReflections() {
-        const bonus = document.getElementById('bonus');
-        const bonusTask = document.getElementById('bonus-task');
-        const emotion = document.getElementById('emotion-reflection');
-        bonus.style.display = 'block';
-        bonusTask.innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
-        emotion.style.display = 'block';
+    // ③ 振り返り全画面表示（ワーク要素を隠す）
+    function showReflectionFullScreen() {
+        document.querySelector('.illustration').style.display = 'none';
+        document.querySelector('h1').style.display = 'none';
+        document.getElementById('display').style.display = 'none';
+        document.getElementById('timer-container').style.display = 'none';
+        document.querySelector('.controls').style.display = 'none';
+        document.getElementById('bonus').style.display = 'none';
+        document.getElementById('emotion-reflection').style.display = 'block';
+    }
+
+    // ③ ホームに戻る（全リセット）
+    function goHome() {
+        document.getElementById('emotion-reflection').style.display = 'none';
+        document.querySelector('.illustration').style.display = 'block';
+        document.querySelector('h1').style.display = 'block';
+        document.getElementById('display').style.display = 'flex';
+        document.getElementById('timer-container').style.display = 'block';
+        document.querySelector('.controls').style.display = 'block';
+        document.getElementById('bonus').style.display = 'none';
+        document.getElementById('timer-text').innerText = maxTime;
+        document.getElementById('timer-meter').style.width = '100%';
+        document.getElementById('display').innerText = "ボタンをおしてね！";
+        document.getElementById('startBtn').style.visibility = 'visible';
+        document.getElementById('stopBtn').style.visibility = 'hidden';
     }
 </script>
 
