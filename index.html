@@ -13,14 +13,17 @@
             --bg: #f8f9fa;
         }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 600px; position: relative; }
+        .container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 600px; position: relative; }
         h1 { color: #333; margin-bottom: 30px; }
 
         /* 抽選エリア */
         #display { font-size: 2.5rem; font-weight: bold; height: 120px; display: flex; align-items: center; justify-content: center; border: 4px dashed #ddd; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); }
 
-        /* タイマーエリア */
-        #timer { font-size: 5rem; font-weight: bold; color: var(--danger); margin: 20px 0; font-family: monospace; }
+        /* タイマーエリア (数字 + メーター) */
+        #timer-container { position: relative; width: 100%; height: 120px; margin: 20px 0; }
+        #timer-text { font-size: 5rem; font-weight: bold; color: var(--danger); font-family: monospace; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .timer-meter-bg { position: absolute; bottom: -10px; left: 0; width: 100%; height: 10px; background-color: #eee; border-radius: 5px; }
+        .timer-meter-fg { height: 100%; background-color: var(--primary); border-radius: 5px; width: 100%; transition: width 1s linear; }
 
         /* ボタン類 */
         button { padding: 15px 30px; font-size: 1.2rem; cursor: pointer; border: none; border-radius: 50px; transition: 0.3s; margin: 5px; color: white; font-weight: bold; }
@@ -31,6 +34,22 @@
         /* おまけ仕掛け */
         #bonus { display: none; margin-top: 20px; padding: 20px; background: #e8f4fd; border-left: 5px solid var(--primary); border-radius: 10px; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 感情リフレクション (終了後に表示) */
+        #emotion-reflection { display: none; margin-top: 30px; padding: 30px; background-color: white; border-top: 4px solid var(--success); border-radius: 15px; animation: fadeIn 0.5s; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        #emotion-reflection h3 { color: #333; margin-top: 0; }
+        .emotion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .emotion-btn { font-size: 1.1rem; padding: 15px; border-radius: 10px; color: #333; }
+        .emotion-btn:hover { background-color: rgba(255, 255, 255, 0.8); }
+        .btn-happy      { background-color: #ffff88; }
+        .btn-sad        { background-color: #88ffff; }
+        .btn-refreshed  { background-color: #88ff88; }
+        .btn-surprise   { background-color: #ffcc88; }
+        .btn-grey       { background-color: #cccccc; }
+        .btn-worry      { background-color: #ccbbff; }
+        .btn-satisfy    { background-color: #ffffcc; }
+        .btn-interested { background-color: #aaddff; }
+        .btn-other      { background-color: #eeeeee; }
 
         /* 教師用隠しパネル (透明度を極限まで下げています) */
         #admin-panel { position: fixed; bottom: 5px; right: 5px; opacity: 0.05; transition: 0.3s; }
@@ -44,7 +63,10 @@
 
     <div id="display">ボタンをおしてね！</div>
 
-    <div id="timer">50</div>
+    <div id="timer-container">
+        <div id="timer-text">50</div>
+        <div class="timer-meter-bg"><div id="timer-meter" class="timer-meter-fg"></div></div>
+    </div>
 
     <div class="controls">
         <button id="startBtn" class="btn-start" onclick="startLottery()">抽選スタート！</button>
@@ -54,6 +76,22 @@
     <div id="bonus">
         <h3>✨ 早くおわった人へのおまけ ✨</h3>
         <p id="bonus-task"></p>
+    </div>
+
+    <div id="emotion-reflection" class="reflection-section">
+        <h3>💬 ワークのあとは気持ちをきき合おう 💬</h3>
+        <p>いまの気持ちはどれかな？ペアで話してみよう。</p>
+        <div class="emotion-grid">
+            <button class="emotion-btn btn-happy">😊 うれしい</button>
+            <button class="emotion-btn btn-sad">😢 かなしい</button>
+            <button class="emotion-btn btn-refreshed">😌 すっきり</button>
+            <button class="emotion-btn btn-surprise">😮 おどろき</button>
+            <button class="emotion-btn btn-grey">😑 もやもや</button>
+            <button class="emotion-btn btn-worry">😟 しんぱい</button>
+            <button class="emotion-btn btn-satisfy">🥰 まんぞく</button>
+            <button class="emotion-btn btn-interested">🤔 気になる</button>
+            <button class="emotion-btn btn-other">❓ その他</button>
+        </div>
     </div>
 </div>
 
@@ -74,6 +112,7 @@
     const bonusTasks = ["お互いの誕生日の月をたし算してみて！", "指ジャンケンで勝負！", "空中で名前を書いて当てっこしよう", "今日楽しみな授業を教え合おう"];
 
     let timeLeft = 50;
+    const maxTime = 50;
     let timerId = null;
 
     function startLottery() {
@@ -82,8 +121,10 @@
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
         const bonus = document.getElementById('bonus');
+        const emotion = document.getElementById('emotion-reflection');
 
         bonus.style.display = 'none';
+        emotion.style.display = 'none';
         startBtn.style.visibility = 'hidden';
         stopBtn.style.visibility = 'visible';
 
@@ -102,40 +143,51 @@
     }
 
     function startTimer() {
-        timeLeft = 50;
-        document.getElementById('timer').innerText = timeLeft;
+        timeLeft = maxTime;
+        document.getElementById('timer-text').innerText = timeLeft;
+        updateMeter();
 
         timerId = setInterval(() => {
             timeLeft--;
-            document.getElementById('timer').innerText = timeLeft;
+            document.getElementById('timer-text').innerText = timeLeft;
+            updateMeter();
             if (timeLeft <= 0) {
                 endWork();
             }
         }, 1000);
     }
 
+    function updateMeter() {
+        const meter = document.getElementById('timer-meter');
+        const width = (timeLeft / maxTime) * 100;
+        meter.style.width = width + '%';
+    }
+
     function endWork() {
         clearInterval(timerId);
         document.getElementById('chime').play();
-        showBonus();
+        showReflections();
     }
 
     function forceEnd() {
         if(confirm("ワークを終了してリセットしますか？")) {
             clearInterval(timerId);
-            document.getElementById('timer').innerText = "50";
+            document.getElementById('timer-text').innerText = "50";
+            document.getElementById('timer-meter').style.width = '100%';
             document.getElementById('display').innerText = "ボタンをおしてね！";
             document.getElementById('startBtn').style.visibility = 'visible';
             document.getElementById('stopBtn').style.visibility = 'hidden';
-            showBonus();
+            showReflections();
         }
     }
 
-    function showBonus() {
+    function showReflections() {
         const bonus = document.getElementById('bonus');
         const bonusTask = document.getElementById('bonus-task');
+        const emotion = document.getElementById('emotion-reflection');
         bonus.style.display = 'block';
         bonusTask.innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
+        emotion.style.display = 'block';
     }
 </script>
 
