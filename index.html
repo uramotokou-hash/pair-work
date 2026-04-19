@@ -3,294 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>朝の会 ペアワーク</title>
+    <title>朝の会 ペアワークツール</title>
     <style>
         :root {
-            --primary-color: #4A90E2;
-            --bg-color: #F8F9FA;
-            --text-color: #333333;
+            --primary: #4A90E2;
+            --secondary: #f39c12;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --bg: #f8f9fa;
         }
-        body {
-            font-family: 'Hiragino Maru Gothic ProN', 'Rounded M+ 1c', 'Meiryo', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            overflow: hidden;
-        }
-        #container {
-            width: 90%;
-            max-width: 800px;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        /* スタート画面 */
-        #start-screen h1 {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        .btn-large {
-            font-size: 2rem;
-            padding: 20px 40px;
-            background-color: #FF9800;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.4);
-        }
-        .btn-large:hover {
-            transform: scale(1.05);
-            background-color: #F57C00;
-        }
-        /* ワーク画面 */
-        #work-screen {
-            display: none;
-        }
-        #activity-text {
-            font-size: 2.5rem;
-            font-weight: bold;
-            line-height: 1.4;
-            margin-bottom: 20px;
-            min-height: 120px;
-        }
-        #role-text {
-            font-size: 1.8rem;
-            color: #E91E63;
-            font-weight: bold;
-            margin-bottom: 30px;
-            background: #FCE4EC;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 10px;
-        }
-        /* タイマー */
-        #timer-display {
-            font-size: 4rem;
-            font-weight: bold;
-            font-variant-numeric: tabular-nums;
-            margin-bottom: 10px;
-        }
-        .progress-container {
-            width: 100%;
-            height: 20px;
-            background-color: #E0E0E0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 100%;
-            background-color: var(--primary-color);
-            transition: width 1s linear, background-color 0.5s;
-        }
-        /* 振り返り画面（心パレット） */
-        #reflection-screen {
-            display: none;
-        }
-        #reflection-screen h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-        .palette-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .color-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .color-circle:hover {
-            transform: scale(1.15);
-        }
-        .btn-reset {
-            font-size: 1.5rem;
-            padding: 15px 30px;
-            background-color: #9E9E9E;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 600px; position: relative; }
+        h1 { color: #333; margin-bottom: 30px; }
+
+        /* 抽選エリア */
+        #display { font-size: 2.5rem; font-weight: bold; height: 120px; display: flex; align-items: center; justify-content: center; border: 4px dashed #ddd; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); }
+
+        /* タイマーエリア */
+        #timer { font-size: 5rem; font-weight: bold; color: var(--danger); margin: 20px 0; font-family: monospace; }
+
+        /* ボタン類 */
+        button { padding: 15px 30px; font-size: 1.2rem; cursor: pointer; border: none; border-radius: 50px; transition: 0.3s; margin: 5px; color: white; font-weight: bold; }
+        .btn-start { background: var(--primary); }
+        .btn-stop { background: var(--danger); visibility: hidden; }
+        button:hover { opacity: 0.8; transform: scale(1.05); }
+
+        /* おまけ仕掛け */
+        #bonus { display: none; margin-top: 20px; padding: 20px; background: #e8f4fd; border-left: 5px solid var(--primary); border-radius: 10px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 教師用隠しパネル (透明度を極限まで下げています) */
+        #admin-panel { position: fixed; bottom: 5px; right: 5px; opacity: 0.05; transition: 0.3s; }
+        #admin-panel:hover { opacity: 1; background: white; border: 1px solid #ccc; padding: 5px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-<div id="container">
-    <div id="start-screen">
-        <h1>ペアワーク<br>おみくじ</h1>
-        <p style="font-size: 1.5rem; margin-bottom: 40px; color: #666;">50秒で、心と頭の準備体操！</p>
-        <button class="btn-large" onclick="startDraw()">お題をひく！</button>
+<div class="container">
+    <h1>☀️ あさのペアワーク</h1>
+
+    <div id="display">ボタンをおしてね！</div>
+
+    <div id="timer">50</div>
+
+    <div class="controls">
+        <button id="startBtn" class="btn-start" onclick="startLottery()">抽選スタート！</button>
+        <button id="stopBtn" class="btn-stop" onclick="forceEnd()">終了・リセット</button>
     </div>
 
-    <div id="work-screen">
-        <div id="role-text">先攻：じゃんけんで勝った人！</div>
-        <div id="activity-text">ここにアクティビティが表示されます</div>
-
-        <div id="timer-display">50</div>
-        <div class="progress-container">
-            <div id="progress-bar" class="progress-bar"></div>
-        </div>
-    </div>
-
-    <div id="reflection-screen">
-        <h2>今の自分の気持ちは、<br>どの色に近いかな？</h2>
-        <div class="palette-container">
-            <div class="color-circle" style="background-color: #FF5252;" title="エネルギーいっぱい！・ちょっと怒り"></div>
-            <div class="color-circle" style="background-color: #FFEB3B;" title="たのしい！・わくわく"></div>
-            <div class="color-circle" style="background-color: #4CAF50;" title="おだやか・リラックス"></div>
-            <div class="color-circle" style="background-color: #2196F3;" title="すっきり・ちょっとさみしい"></div>
-            <div class="color-circle" style="background-color: #E040FB;" title="あたたかい・やさしい気持ち"></div>
-        </div>
-        <button class="btn-reset" onclick="resetApp()">最初にもどる</button>
+    <div id="bonus">
+        <h3>✨ 早くおわった人へのおまけ ✨</h3>
+        <p id="bonus-task"></p>
     </div>
 </div>
 
+<div id="admin-panel">
+    <small>⚙️</small>
+    <select id="force-select">
+        <option value="">ランダム</option>
+        <option value="昨日あったいいことを話そう">いいこと話そう</option>
+        <option value="好きな給食メニューを教え合おう">給食メニュー</option>
+        <option value="最近ハマっている遊びは？">ハマってる遊び</option>
+    </select>
+</div>
+
+<audio id="chime" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+
 <script>
-    // アクティビティのリスト（15個）
-    const activities = [
-        "「今日の朝ごはん、何食べた？」と質問して、笑顔で聴こう！",
-        "「今の気分を色で例えると何色？」と質問して、その理由を聴いてみよう！",
-        "「最近あった、ちょっと嬉しかったこと教えて！」と質問してみよう！",
-        "「今日、楽しみにしていることは何？」と質問して、うなずきながら聴こう！",
-        "「もし魔法が一つ使えるなら、何をする？」と質問して、一緒に想像しよう！",
-        "「昨日、一番リラックスできた瞬間はいつ？」と質問してみよう！",
-        "「最近見つけた、面白いものや好きなものは？」と質問して、興味を持って聴こう！",
-        "「今の自分に『お疲れ様』って言うなら、どんな言葉をかける？」と質問しよう！",
-        "「好きな季節とその理由は？」と質問して、「いいね！」と返そう！",
-        "「もし今、どこにでも行けるならどこに行きたい？」と質問してみよう！",
-        "ペアの相手と、息を合わせて同時に「せーの」で大きく深呼吸しよう！",
-        "後出しじゃんけん！相手が出した手に3回連続で「勝つ」手を出そう！",
-        "「最近、誰かに『ありがとう』って思ったことある？」と質問してみよう！",
-        "「今週末、やってみたいことは何？」と質問して、わくわくを共有しよう！",
-        "お互いの目を見て、「今日も1日よろしく！」と笑顔でおじぎをしよう！"
-    ];
+    const tasks = ["昨日あったいいことを話そう", "好きな給食メニューを教え合おう", "最近ハマっている遊びは？", "1分間でジャンケン何回勝てるか！", "お互いのいいところを1つ見つけよう"];
+    const bonusTasks = ["お互いの誕生日の月をたし算してみて！", "指ジャンケンで勝負！", "空中で名前を書いて当てっこしよう", "今日楽しみな授業を教え合おう"];
 
-    let lastIndex = -1;
-    let timerInterval;
-    const TIME_LIMIT = 50; // 50秒設定
+    let timeLeft = 50;
+    let timerId = null;
 
-    // 音声コンテキストの準備（ブラウザの制限を回避するため、最初のクリックで初期化）
-    let audioCtx;
+    function startLottery() {
+        const display = document.getElementById('display');
+        const adminSelect = document.getElementById('force-select').value;
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const bonus = document.getElementById('bonus');
 
-    function initAudio() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-    }
+        bonus.style.display = 'none';
+        startBtn.style.visibility = 'hidden';
+        stopBtn.style.visibility = 'visible';
 
-    function playChime() {
-        if (!audioCtx) return;
-
-        // 優しく響くチャイム音（ド・ミ・ソ・ド）
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        const now = audioCtx.currentTime;
-
-        notes.forEach((freq, i) => {
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-
-            osc.type = 'sine';
-            osc.frequency.value = freq;
-
-            // 音量のエンベロープ（優しく立ち上がり、余韻を残して消える）
-            gainNode.gain.setValueAtTime(0, now + i * 0.15);
-            gainNode.gain.linearRampToValueAtTime(0.3, now + i * 0.15 + 0.05);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + i * 0.15 + 1.5);
-
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            osc.start(now + i * 0.15);
-            osc.stop(now + i * 0.15 + 1.5);
-        });
-    }
-
-    function startDraw() {
-        initAudio(); // 音声の初期化
-
-        // UIの切り替え
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('reflection-screen').style.display = 'none';
-        document.getElementById('work-screen').style.display = 'block';
-
-        // ランダムなアクティビティを選ぶ（前回と同じものは避ける）
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * activities.length);
-        } while (randomIndex === lastIndex);
-        lastIndex = randomIndex;
-
-        document.getElementById('activity-text').innerText = activities[randomIndex];
-
-        // タイマーの初期化とスタート
-        startTimer();
+        // 抽選演出
+        let count = 0;
+        let shuffle = setInterval(() => {
+            display.innerText = tasks[Math.floor(Math.random() * tasks.length)];
+            count++;
+            if (count > 15) {
+                clearInterval(shuffle);
+                // 細工が設定されていればそれを表示、なければランダム
+                display.innerText = adminSelect || tasks[Math.floor(Math.random() * tasks.length)];
+                startTimer();
+            }
+        }, 100);
     }
 
     function startTimer() {
-        clearInterval(timerInterval);
+        timeLeft = 50;
+        document.getElementById('timer').innerText = timeLeft;
 
-        let timeLeft = TIME_LIMIT;
-        const display = document.getElementById('timer-display');
-        const progressBar = document.getElementById('progress-bar');
-
-        display.innerText = timeLeft;
-        progressBar.style.width = '100%';
-        progressBar.style.backgroundColor = '#4A90E2';
-
-        timerInterval = setInterval(() => {
+        timerId = setInterval(() => {
             timeLeft--;
-            display.innerText = timeLeft;
-
-            // プログレスバーの更新
-            const percentage = (timeLeft / TIME_LIMIT) * 100;
-            progressBar.style.width = percentage + '%';
-
-            // 残り10秒で色を変える
-            if (timeLeft <= 10) {
-                progressBar.style.backgroundColor = '#FF5252';
-                display.style.color = '#FF5252';
-            } else {
-                display.style.color = '#333';
-            }
-
-            // 終了処理
+            document.getElementById('timer').innerText = timeLeft;
             if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                playChime();
-                setTimeout(showReflection, 1500); // チャイムが鳴り終わる頃に切り替え
+                endWork();
             }
         }, 1000);
     }
 
-    function showReflection() {
-        document.getElementById('work-screen').style.display = 'none';
-        document.getElementById('reflection-screen').style.display = 'block';
+    function endWork() {
+        clearInterval(timerId);
+        document.getElementById('chime').play();
+        showBonus();
     }
 
-    function resetApp() {
-        document.getElementById('reflection-screen').style.display = 'none';
-        document.getElementById('start-screen').style.display = 'block';
+    function forceEnd() {
+        if(confirm("ワークを終了してリセットしますか？")) {
+            clearInterval(timerId);
+            document.getElementById('timer').innerText = "50";
+            document.getElementById('display').innerText = "ボタンをおしてね！";
+            document.getElementById('startBtn').style.visibility = 'visible';
+            document.getElementById('stopBtn').style.visibility = 'hidden';
+            showBonus();
+        }
+    }
+
+    function showBonus() {
+        const bonus = document.getElementById('bonus');
+        const bonusTask = document.getElementById('bonus-task');
+        bonus.style.display = 'block';
+        bonusTask.innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
     }
 </script>
 
