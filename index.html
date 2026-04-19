@@ -195,14 +195,37 @@
     // ③ 時間切れ → 振り返り全画面へ
     function endWork() {
         clearInterval(timerId);
-        document.getElementById('chime').play();
+        playChimeShort();
         showReflectionFullScreen();
     }
 
-    // ② 確認なし・即リセット
+    // ① 終了・リセット → 振り返り全画面へ（タイマー停止 + チャイム）
     function forceEnd() {
         clearInterval(timerId);
-        goHome();
+        playChimeShort();
+        showReflectionFullScreen();
+    }
+
+    // ② チャイムを再生し、1.5秒後にフェードアウトして停止
+    function playChimeShort() {
+        const chime = document.getElementById('chime');
+        chime.currentTime = 0;
+        chime.volume = 1;
+        chime.play();
+        setTimeout(() => {
+            let vol = 1;
+            const fade = setInterval(() => {
+                vol -= 0.1;
+                if (vol <= 0) {
+                    chime.pause();
+                    chime.currentTime = 0;
+                    chime.volume = 1;
+                    clearInterval(fade);
+                } else {
+                    chime.volume = vol;
+                }
+            }, 30);
+        }, 1500);
     }
 
     // ③ 振り返り全画面表示（ワーク要素を隠す）
@@ -218,6 +241,10 @@
 
     // ③ ホームに戻る（全リセット）
     function goHome() {
+        const chime = document.getElementById('chime');
+        chime.pause();
+        chime.currentTime = 0;
+        chime.volume = 1;
         document.getElementById('emotion-reflection').style.display = 'none';
         document.querySelector('.illustration').style.display = 'block';
         document.querySelector('h1').style.display = 'block';
