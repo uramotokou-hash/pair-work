@@ -10,117 +10,92 @@
             --secondary: #f39c12;
             --success: #2ecc71;
             --danger: #e74c3c;
-            --bg: #f0f8ff;
-            --text-main: #333;
+            --bg: #f8f9fa;
         }
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: var(--text-main);
-        }
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            text-align: center;
-            width: 95%;
-            max-width: 650px;
-            position: relative;
-            overflow: hidden;
-        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 600px; position: relative; }
 
-        h1 { color: #333; margin-bottom: 20px; font-size: 2rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        /* タイトルと隠れスイッチ */
+        h1 { color: #333; margin-bottom: 30px; position: relative; }
+        #secret-switch { cursor: default; user-select: none; }
 
-        /* ワーク画面 */
-        #work-screen { display: block; animation: fadeIn 0.5s; }
-
-        /* イラストエリア */
-        .illustration { font-size: 3rem; margin-bottom: 10px; animation: bounce 2s infinite ease-in-out; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* 予約パネル (初期状態は非表示) */
+        #reservation-panel { display: none; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); background: white; border: 2px solid var(--primary); padding: 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 100; font-size: 1rem; width: 80%; }
+        #reservation-panel select { padding: 8px; font-size: 1rem; width: 100%; margin-top: 10px; }
+        #reservation-status { font-size: 0.8rem; color: var(--danger); margin-top: 5px; min-height: 1.2em; }
 
         /* 抽選エリア */
-        #display { font-size: 2.2rem; font-weight: bold; height: 110px; display: flex; align-items: center; justify-content: center; border: 4px dashed #bcdcff; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); background-color: #f9fcff; }
+        #display { font-size: 2.5rem; font-weight: bold; height: 120px; display: flex; align-items: center; justify-content: center; border: 4px dashed #ddd; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); }
 
         /* タイマーエリア */
-        #timer-container { position: relative; width: 100%; height: 100px; margin: 20px 0; }
-        #timer-text { font-size: 5rem; font-weight: bold; color: var(--danger); font-family: monospace; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 2; }
-        .timer-meter-bg { position: absolute; bottom: -15px; left: 0; width: 100%; height: 12px; background-color: #eee; border-radius: 6px; overflow: hidden; }
-        .timer-meter-fg { height: 100%; background-color: var(--primary); border-radius: 6px; width: 100%; transition: width 1s linear; }
+        #timer-container { position: relative; width: 100%; height: 120px; margin: 20px 0; }
+        #timer-text { font-size: 5rem; font-weight: bold; color: var(--danger); font-family: monospace; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .timer-meter-bg { position: absolute; bottom: -10px; left: 0; width: 100%; height: 10px; background-color: #eee; border-radius: 5px; }
+        .timer-meter-fg { height: 100%; background-color: var(--primary); border-radius: 5px; width: 100%; transition: width 1s linear; }
 
         /* ボタン類 */
-        button { padding: 15px 35px; font-size: 1.3rem; cursor: pointer; border: none; border-radius: 50px; transition: 0.2s; margin: 10px; color: white; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button { padding: 15px 30px; font-size: 1.2rem; cursor: pointer; border: none; border-radius: 50px; transition: 0.3s; margin: 5px; color: white; font-weight: bold; }
         .btn-start { background: var(--primary); }
-        .btn-stop { background: var(--danger); display: none; }
-        .btn-home { background: #888; margin-top: 30px; font-size: 1.1rem; }
-        button:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
-        button:active { transform: translateY(0); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-stop { background: var(--danger); visibility: hidden; }
+        button:hover { opacity: 0.8; transform: scale(1.05); }
 
-        /* こっそりおまけ仕掛け */
-        #secret-bonus { display: none; margin-top: 35px; font-size: 0.95rem; color: #7f8c8d; background: #fdfdfd; padding: 10px; border-radius: 10px; border: 1px solid #eee; }
-        #secret-bonus span { font-weight: bold; color: #34495e; }
+        /* おまけ仕掛け */
+        #bonus { display: none; margin-top: 20px; padding: 20px; background: #e8f4fd; border-left: 5px solid var(--primary); border-radius: 10px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 感情リフレクション (大きく独立) */
-        #reflection-screen { display: none; animation: slideIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        #reflection-screen h2 { color: var(--success); font-size: 2.2rem; margin-bottom: 10px; line-height: 1.3; }
-        #reflection-screen p { font-size: 1.2rem; color: #555; margin-bottom: 30px; }
-
-        .emotion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-        .emotion-btn { font-size: 1.2rem; padding: 20px 10px; border-radius: 15px; color: #333; box-shadow: none; border: 2px solid transparent; transition: 0.2s; }
-        .emotion-btn:hover { transform: scale(1.05); border-color: rgba(0,0,0,0.1); }
-
-        .btn-happy      { background-color: #ffeb3b; }
-        .btn-sad        { background-color: #81d4fa; }
-        .btn-refreshed  { background-color: #a5d6a7; }
-        .btn-surprise   { background-color: #ffcc80; }
-        .btn-grey       { background-color: #e0e0e0; }
-        .btn-worry      { background-color: #ce93d8; }
-        .btn-satisfy    { background-color: #fff59d; }
-        .btn-interested { background-color: #80cbc4; }
-        .btn-other      { background-color: #f5f5f5; border: 1px solid #ccc; }
-
-        /* 教師用隠しパネル */
-        #admin-panel { position: fixed; bottom: 5px; right: 5px; opacity: 0.03; transition: 0.3s; z-index: 100; }
-        #admin-panel:hover { opacity: 1; background: white; border: 1px solid #ccc; padding: 5px; border-radius: 5px; }
+        /* 感情リフレクション */
+        #emotion-reflection { display: none; margin-top: 30px; padding: 30px; background-color: white; border-top: 4px solid var(--success); border-radius: 15px; animation: fadeIn 0.5s; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        #emotion-reflection h3 { color: #333; margin-top: 0; }
+        .emotion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .emotion-btn { font-size: 1.1rem; padding: 15px; border-radius: 10px; color: #333; font-weight: bold; }
+        .emotion-btn:hover { background-color: rgba(255, 255, 255, 0.8); }
+        .btn-happy      { background-color: #ffff88; }
+        .btn-sad        { background-color: #88ffff; }
+        .btn-refreshed  { background-color: #88ff88; }
+        .btn-surprise   { background-color: #ffcc88; }
+        .btn-grey       { background-color: #cccccc; }
+        .btn-worry      { background-color: #ccbbff; }
+        .btn-satisfy    { background-color: #ffffcc; }
+        .btn-interested { background-color: #aaddff; }
+        .btn-other      { background-color: #eeeeee; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <h1><span id="secret-switch" onclick="toggleReservation()">☀️</span> あさのペアワーク</h1>
 
-    <div id="work-screen">
-        <div class="illustration">🏫 👦💬👧 ☀️</div>
-        <h1>あさのペアワーク</h1>
-
-        <div id="display">ボタンをおしてね！</div>
-
-        <div id="timer-container">
-            <div id="timer-text">50</div>
-            <div class="timer-meter-bg"><div id="timer-meter" class="timer-meter-fg"></div></div>
-        </div>
-
-        <div class="controls">
-            <button id="startBtn" class="btn-start" onclick="startLottery()">抽選スタート！</button>
-            <button id="stopBtn" class="btn-stop" onclick="forceEnd()">終了して振り返りへ ⏭️</button>
-        </div>
-
-        <div id="secret-bonus">
-            🤫 早くおわった人は... 「<span id="bonus-task"></span>」をやって待っててね。
-        </div>
+    <div id="reservation-panel">
+        <label>🤫 次のワークを予約（1回限り）</label>
+        <select id="reserve-select" onchange="setReservation()">
+            <option value="">ランダム（予約なし）</option>
+            <option value="昨日あったいいことを話そう">いいこと話そう</option>
+            <option value="好きな給食メニューをきき合おう">給食メニュー</option>
+            <option value="最近ハマっている遊びは？">ハマってる遊び</option>
+        </select>
+        <div id="reservation-status"></div>
     </div>
 
-    <div id="reflection-screen">
-        <h2>✨ ワークはおわり！ ✨<br>いまの気持ちをきき合おう</h2>
-        <p>心の中はどの色に近いかな？ペアで話してみよう。</p>
+    <div id="display">ボタンをおしてね！</div>
 
+    <div id="timer-container">
+        <div id="timer-text">50</div>
+        <div class="timer-meter-bg"><div id="timer-meter" class="timer-meter-fg"></div></div>
+    </div>
+
+    <div class="controls">
+        <button id="startBtn" class="btn-start" onclick="startLottery()">抽選スタート！</button>
+        <button id="stopBtn" class="btn-stop" onclick="forceEnd()">終了・リセット</button>
+    </div>
+
+    <div id="bonus">
+        <h3>✨ 早くおわった人へのおまけ ✨</h3>
+        <p id="bonus-task"></p>
+    </div>
+
+    <div id="emotion-reflection" class="reflection-section">
+        <h3>💬 ワークのあとは気持ちをきき合おう 💬</h3>
+        <p>いまの気持ちはどれかな？ペアできき合ってみよう。</p>
         <div class="emotion-grid">
             <button class="emotion-btn btn-happy">😊 うれしい</button>
             <button class="emotion-btn btn-sad">😢 かなしい</button>
@@ -132,43 +107,42 @@
             <button class="emotion-btn btn-interested">🤔 気になる</button>
             <button class="emotion-btn btn-other">❓ その他</button>
         </div>
-
-        <button class="btn-home" onclick="goHome()">🏠 ホーム画面にもどる</button>
     </div>
-
-</div>
-
-<div id="admin-panel">
-    <small>⚙️</small>
-    <select id="force-select">
-        <option value="">ランダム</option>
-        <option value="昨日あったいいことを話そう">いいこと話そう</option>
-        <option value="好きな給食メニューを教え合おう">給食メニュー</option>
-        <option value="最近ハマっている遊びは？">ハマってる遊び</option>
-        <option value="1分間でジャンケン何回勝てるか！">ジャンケン</option>
-    </select>
 </div>
 
 <audio id="chime" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
 <script>
-    const tasks = ["昨日あったいいことを話そう", "好きな給食メニューを教え合おう", "最近ハマっている遊びは？", "1分間でジャンケン何回勝てるか！", "お互いのいいところを1つ見つけよう"];
-    const bonusTasks = ["お互いの誕生日の月をたし算してみて", "指ジャンケンで勝負", "空中で名前を書いて当てっこしよう", "今日楽しみな授業を教え合おう"];
+    const tasks = ["昨日あったいいことを話そう", "好きな給食メニューをきき合おう", "最近ハマっている遊びは？", "1分間でジャンケン何回勝てるか！", "お互いのいいところを1つ見つけよう"];
+    const bonusTasks = ["お互いの誕生日の月をたし算してみて！", "指ジャンケンで勝負！", "空中で名前を書いて当てっこしよう", "今日楽しみな授業をきき合おう"];
 
     let timeLeft = 50;
     const maxTime = 50;
     let timerId = null;
+    let reservedTask = "";
+
+    function toggleReservation() {
+        const panel = document.getElementById('reservation-panel');
+        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+    }
+
+    function setReservation() {
+        reservedTask = document.getElementById('reserve-select').value;
+        document.getElementById('reservation-status').innerText = reservedTask ? "※次回はこれを必ず出します" : "";
+    }
 
     function startLottery() {
         const display = document.getElementById('display');
-        const adminSelect = document.getElementById('force-select').value;
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
-        const secretBonus = document.getElementById('secret-bonus');
+        const bonus = document.getElementById('bonus');
+        const emotion = document.getElementById('emotion-reflection');
 
-        startBtn.style.display = 'none';
-        stopBtn.style.display = 'inline-block';
-        secretBonus.style.display = 'none';
+        document.getElementById('reservation-panel').style.display = 'none';
+        bonus.style.display = 'none';
+        emotion.style.display = 'none';
+        startBtn.style.visibility = 'hidden';
+        stopBtn.style.visibility = 'visible';
 
         let count = 0;
         let shuffle = setInterval(() => {
@@ -176,9 +150,14 @@
             count++;
             if (count > 15) {
                 clearInterval(shuffle);
-                display.innerText = adminSelect || tasks[Math.floor(Math.random() * tasks.length)];
-                document.getElementById('bonus-task').innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
-                secretBonus.style.display = 'block';
+                if (reservedTask !== "") {
+                    display.innerText = reservedTask;
+                    reservedTask = "";
+                    document.getElementById('reserve-select').value = "";
+                    document.getElementById('reservation-status').innerText = "";
+                } else {
+                    display.innerText = tasks[Math.floor(Math.random() * tasks.length)];
+                }
                 startTimer();
             }
         }, 100);
@@ -200,30 +179,34 @@
     }
 
     function updateMeter() {
-        const meter = document.getElementById('timer-meter');
-        meter.style.width = (timeLeft / maxTime) * 100 + '%';
+        document.getElementById('timer-meter').style.width = (timeLeft / maxTime) * 100 + '%';
     }
 
     function endWork() {
         clearInterval(timerId);
         document.getElementById('chime').play();
-        document.getElementById('work-screen').style.display = 'none';
-        document.getElementById('reflection-screen').style.display = 'block';
+        showReflections();
     }
 
     function forceEnd() {
-        endWork();
+        if (confirm("ワークを終了してリセットしますか？")) {
+            clearInterval(timerId);
+            document.getElementById('timer-text').innerText = "50";
+            document.getElementById('timer-meter').style.width = '100%';
+            document.getElementById('display').innerText = "ボタンをおしてね！";
+            document.getElementById('startBtn').style.visibility = 'visible';
+            document.getElementById('stopBtn').style.visibility = 'hidden';
+            showReflections();
+        }
     }
 
-    function goHome() {
-        document.getElementById('reflection-screen').style.display = 'none';
-        document.getElementById('work-screen').style.display = 'block';
-        document.getElementById('timer-text').innerText = maxTime;
-        document.getElementById('timer-meter').style.width = '100%';
-        document.getElementById('display').innerText = "ボタンをおしてね！";
-        document.getElementById('startBtn').style.display = 'inline-block';
-        document.getElementById('stopBtn').style.display = 'none';
-        document.getElementById('secret-bonus').style.display = 'none';
+    function showReflections() {
+        const bonus = document.getElementById('bonus');
+        const bonusTask = document.getElementById('bonus-task');
+        const emotion = document.getElementById('emotion-reflection');
+        bonus.style.display = 'block';
+        bonusTask.innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
+        emotion.style.display = 'block';
     }
 </script>
 
