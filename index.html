@@ -70,10 +70,10 @@
 <div class="container">
     <div class="illustration">🏫 👦💬👧 ☀️</div>
     <h1><span id="secret-switch" onclick="toggleReservation()">☀️</span> ペアトーク</h1>
-    <p>トークテーマを引いてみよう！</p>
+    <p>トークテーマを<ruby>引<rt>ひ</rt></ruby>いてみよう！</p>
 
     <div id="reservation-panel">
-        <label>🤫 次のワークを予約（1回限り）</label>
+        <label>🤫 <ruby>次<rt>つぎ</rt></ruby>のワークを<ruby>予約<rt>よやく</rt></ruby>（1<ruby>回<rt>かい</rt></ruby><ruby>限<rt>かぎ</rt></ruby>り）</label>
         <select id="reserve-select" onchange="setReservation()">
             <option value="">ランダム（予約なし）</option>
         </select>
@@ -88,18 +88,18 @@
     </div>
 
     <div class="controls">
-        <button id="startBtn" class="btn-start" onclick="startLottery()">抽選スタート！</button>
-        <button id="stopBtn" class="btn-stop" onclick="forceEnd()">終了・リセット</button>
+        <button id="startBtn" class="btn-start" onclick="startLottery()"><ruby>抽選<rt>ちゅうせん</rt></ruby>スタート！</button>
+        <button id="stopBtn" class="btn-stop" onclick="forceEnd()"><ruby>終了<rt>しゅうりょう</rt></ruby>・リセット</button>
     </div>
 
     <div id="bonus">
-        <h3>✨ 早くおわった人へのおまけ ✨</h3>
+        <h3>✨ <ruby>早<rt>はや</rt></ruby>くおわった<ruby>人<rt>ひと</rt></ruby>へのおまけ ✨</h3>
         <p id="bonus-task"></p>
     </div>
 
     <div id="emotion-reflection" class="reflection-section">
-        <h3>💬 ワークのあとは気持ちをきき合おう 💬</h3>
-        <p>いまの気持ちはどれかな？ペアできき合ってみよう。</p>
+        <h3>💬 ワークのあとは<ruby>気持<rt>きも</rt></ruby>ちをきき<ruby>合<rt>あ</rt></ruby>おう 💬</h3>
+        <p>いまの<ruby>気持<rt>きも</rt></ruby>ちはどれかな？ペアできき<ruby>合<rt>あ</rt></ruby>ってみよう。</p>
         <div class="emotion-grid">
             <button class="emotion-btn btn-happy">😊 うれしい</button>
             <button class="emotion-btn btn-sad">😢 かなしい</button>
@@ -108,8 +108,8 @@
             <button class="emotion-btn btn-grey">😑 もやもや</button>
             <button class="emotion-btn btn-worry">😟 しんぱい</button>
             <button class="emotion-btn btn-satisfy">🥰 まんぞく</button>
-            <button class="emotion-btn btn-interested">🤔 気になる</button>
-            <button class="emotion-btn btn-other">❓ その他</button>
+            <button class="emotion-btn btn-interested">🤔 <ruby>気<rt>き</rt></ruby>になる</button>
+            <button class="emotion-btn btn-other">❓ その<ruby>他<rt>た</rt></ruby></button>
         </div>
         <button class="btn-home" onclick="goHome()">🏠 ホームにもどる</button>
     </div>
@@ -119,77 +119,78 @@
 
 <script>
     const tasks = [
-        "昨日あった「ちょっといいこと」をきき合おう",
-        "好きな給食のメニューはなに？",
-        "最近ハマっている遊びや趣味は？",
-        "犬派？猫派？（それとも他の動物？）",
-        "春夏秋冬、どの季節が一番好き？",
-        "朝ごはんは、パン派？ごはん派？",
-        "もし魔法が１つだけ使えるなら何をする？",
-        "好きなお菓子やデザートをきき合おう",
-        "タイムマシンがあったら、過去と未来どっちに行きたい？",
-        "最近「ふふっ」と笑ったことはなに？",
-        "好きな色は？その色のどんなところが好き？",
-        "休みの日はどんな風に過ごすのが好き？",
-        "好きなテレビ番組やYouTubeのチャンネルは？",
-        "もし透明人間になれたら、何をしてみたい？",
-        "今までに行った場所で、一番楽しかったところは？",
-        "好きなスポーツや、やってみたいスポーツは？",
-        "宇宙旅行に行けるなら、何を持っていきたい？",
-        "楽しいと思う時間や、好きな時間はいつ？",
-        "もし1日だけ動物になれるなら、何になりたい？",
-        "さいきん見つけた「ちょっとした発見」をきき合おう",
-        "山と海、遊びに行くならどっちが好き？",
-        "お弁当に入っていたら一番うれしいおかずは？",
-        "もし無人島に１つだけ持っていくなら何にする？",
-        "好きな絵本やマンガ、キャラクターについてきき合おう",
-        "最近ちょっとがんばっていることはある？",
-        "大人になったらやってみたいことや夢は？",
-        "好きな音楽や、よく歌う曲はなに？",
-        "もし自分のお店を開くなら、何屋さんにする？",
-        "言われてうれしかった言葉をきき合おう",
-        "お互いの「いいところ」を１つ見つけて伝え合おう"
+        "<ruby>昨日<rt>きのう</rt></ruby>あった「ちょっといいこと」をきき<ruby>合<rt>あ</rt></ruby>おう",
+        "<ruby>好<rt>す</rt></ruby>きな<ruby>給食<rt>きゅうしょく</rt></ruby>のメニューはなに？",
+        "<ruby>最近<rt>さいきん</rt></ruby>ハマっている<ruby>遊<rt>あそ</rt></ruby>びや<ruby>趣味<rt>しゅみ</rt></ruby>は？",
+        "<ruby>犬<rt>いぬ</rt></ruby><ruby>派<rt>は</rt></ruby>？<ruby>猫<rt>ねこ</rt></ruby><ruby>派<rt>は</rt></ruby>？（それとも<ruby>他<rt>ほか</rt></ruby>の<ruby>動物<rt>どうぶつ</rt></ruby>？）",
+        "<ruby>春<rt>はる</rt></ruby><ruby>夏<rt>なつ</rt></ruby><ruby>秋<rt>あき</rt></ruby><ruby>冬<rt>ふゆ</rt></ruby>、どの<ruby>季節<rt>きせつ</rt></ruby>が<ruby>一番<rt>いちばん</rt></ruby><ruby>好<rt>す</rt></ruby>き？",
+        "<ruby>朝<rt>あさ</rt></ruby>ごはんは、パン<ruby>派<rt>は</rt></ruby>？ごはん<ruby>派<rt>は</rt></ruby>？",
+        "もし<ruby>魔法<rt>まほう</rt></ruby>が１つだけ<ruby>使<rt>つか</rt></ruby>えるなら<ruby>何<rt>なに</rt></ruby>をする？",
+        "<ruby>好<rt>す</rt></ruby>きなお<ruby>菓子<rt>かし</rt></ruby>やデザートをきき<ruby>合<rt>あ</rt></ruby>おう",
+        "タイムマシンがあったら、<ruby>過去<rt>かこ</rt></ruby>と<ruby>未来<rt>みらい</rt></ruby>どっちに<ruby>行<rt>い</rt></ruby>きたい？",
+        "<ruby>最近<rt>さいきん</rt></ruby>「ふふっ」と<ruby>笑<rt>わら</rt></ruby>ったことはなに？",
+        "<ruby>好<rt>す</rt></ruby>きな<ruby>色<rt>いろ</rt></ruby>は？その<ruby>色<rt>いろ</rt></ruby>のどんなところが<ruby>好<rt>す</rt></ruby>き？",
+        "<ruby>休<rt>やす</rt></ruby>みの<ruby>日<rt>ひ</rt></ruby>はどんな<ruby>風<rt>ふう</rt></ruby>に<ruby>過<rt>す</rt></ruby>ごすのが<ruby>好<rt>す</rt></ruby>き？",
+        "<ruby>好<rt>す</rt></ruby>きなテレビ<ruby>番組<rt>ばんぐみ</rt></ruby>やYouTubeのチャンネルは？",
+        "もし<ruby>透明<rt>とうめい</rt></ruby><ruby>人間<rt>にんげん</rt></ruby>になれたら、<ruby>何<rt>なに</rt></ruby>をしてみたい？",
+        "<ruby>今<rt>いま</rt></ruby>までに<ruby>行<rt>い</rt></ruby>った<ruby>場所<rt>ばしょ</rt></ruby>で、<ruby>一番<rt>いちばん</rt></ruby><ruby>楽<rt>たの</rt></ruby>しかったところは？",
+        "<ruby>好<rt>す</rt></ruby>きなスポーツや、やってみたいスポーツは？",
+        "<ruby>宇宙<rt>うちゅう</rt></ruby><ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>けるなら、<ruby>何<rt>なに</rt></ruby>を<ruby>持<rt>も</rt></ruby>っていきたい？",
+        "<ruby>楽<rt>たの</rt></ruby>しいと<ruby>思<rt>おも</rt></ruby>う<ruby>時間<rt>じかん</rt></ruby>や、<ruby>好<rt>す</rt></ruby>きな<ruby>時間<rt>じかん</rt></ruby>はいつ？",
+        "もし1<ruby>日<rt>にち</rt></ruby>だけ<ruby>動物<rt>どうぶつ</rt></ruby>になれるなら、<ruby>何<rt>なに</rt></ruby>になりたい？",
+        "さいきん<ruby>見<rt>み</rt></ruby>つけた「ちょっとした<ruby>発見<rt>はっけん</rt></ruby>」をきき<ruby>合<rt>あ</rt></ruby>おう",
+        "<ruby>山<rt>やま</rt></ruby>と<ruby>海<rt>うみ</rt></ruby>、<ruby>遊<rt>あそ</rt></ruby>びに<ruby>行<rt>い</rt></ruby>くならどっちが<ruby>好<rt>す</rt></ruby>き？",
+        "お<ruby>弁当<rt>べんとう</rt></ruby>に<ruby>入<rt>はい</rt></ruby>っていたら<ruby>一番<rt>いちばん</rt></ruby>うれしいおかずは？",
+        "もし<ruby>無人島<rt>むじんとう</rt></ruby>に１つだけ<ruby>持<rt>も</rt></ruby>っていくなら<ruby>何<rt>なに</rt></ruby>にする？",
+        "<ruby>好<rt>す</rt></ruby>きな<ruby>絵本<rt>えほん</rt></ruby>やマンガ、キャラクターについてきき<ruby>合<rt>あ</rt></ruby>おう",
+        "<ruby>最近<rt>さいきん</rt></ruby>ちょっとがんばっていることはある？",
+        "<ruby>大人<rt>おとな</rt></ruby>になったらやってみたいことや<ruby>夢<rt>ゆめ</rt></ruby>は？",
+        "<ruby>好<rt>す</rt></ruby>きな<ruby>音楽<rt>おんがく</rt></ruby>や、よく<ruby>歌<rt>うた</rt></ruby>う<ruby>曲<rt>きょく</rt></ruby>はなに？",
+        "もし<ruby>自分<rt>じぶん</rt></ruby>のお<ruby>店<rt>みせ</rt></ruby>を<ruby>開<rt>ひら</rt></ruby>くなら、<ruby>何<rt>なに</rt></ruby><ruby>屋<rt>や</rt></ruby>さんにする？",
+        "<ruby>言<rt>い</rt></ruby>われてうれしかった<ruby>言葉<rt>ことば</rt></ruby>をきき<ruby>合<rt>あ</rt></ruby>おう",
+        "お<ruby>互<rt>たが</rt></ruby>いの「いいところ」を１つ<ruby>見<rt>み</rt></ruby>つけて<ruby>伝<rt>つた</rt></ruby>え<ruby>合<rt>あ</rt></ruby>おう"
     ];
-    // 予約プルダウンを tasks から動的生成
+    // 予約プルダウンを tasks から動的生成（ルビタグを除いた平文で表示）
+    function stripHtml(html) { return html.replace(/<[^>]*>/g, ''); }
     const select = document.getElementById('reserve-select');
     tasks.forEach(task => {
         const opt = document.createElement('option');
         opt.value = task;
-        opt.textContent = task;
+        opt.textContent = stripHtml(task);
         select.appendChild(opt);
     });
 
     const bonusTasks = [
-        "お互いの名前の文字数を足すといくつになる？",
-        "３文字の言葉を、交互に３つずつ言ってみよう",
-        "「あ」から始まる冷たいものを教え合おう",
-        "しりとりを３往復しよう（最初は「あさ」から！）",
-        "「き」から始まる動物を２つずつ言ってみよう",
-        "早口言葉「生麦生米生卵」を３回言ってみよう！",
-        "１〜３０を数えて、３の倍数の時だけ手を叩こう",
-        "「あ」を使わずに、今日の朝ごはんを説明してみよう",
-        "日本語以外のあいさつを３つ教え合おう",
-        "逆さ言葉クイズ！「んこんい」はなーんだ？（正解：いんこ）",
-        "100万円あったら、今日中に何に使う？",
-        "宇宙人と会ったら、最初に何を聞く？",
-        "もし自分が新種の昆虫を発見したら、どんな名前をつける？",
-        "無人島に持っていくなら「ナイフ」と「ロープ」どっち？",
-        "今の気分を「色」に例えると何色？",
-        "一生同じものしか食べられないとしたら何にする？",
-        "ドラえもんの道具、一つだけもらえるなら何？",
-        "タイムトラベルできるなら、過去と未来どっちに行きたい？",
-        "今日のラッキーカラーを勝手に決めて教え合おう",
-        "利き手じゃない方の手で、空中に自分の名前を書いてみよう",
-        "指スマ（いっせーのーで！）で３回勝負！",
-        "座ったまま、両足を床から１０秒浮かせてキープ！",
-        "後出しジャンケン！相手に「負ける」手を出してみよう（３回）",
-        "まばたきガマン対決！どっちが長く目を開けていられる？",
-        "お互いの手のひらに指で数字を書いて当てっこしよう",
-        "両手で別々の形を作ろう！（右手はチョキ、左手はパーなど）",
-        "今日着ている服の中で、一番お気に入りのポイントは？",
-        "教室の中にある「カタカナ」の名前のものを３つ探そう",
-        "空中で図形を描いて、何を描いたか当てっこしよう",
-        "深呼吸を３回して、リラックスしよう！"
+        "お<ruby>互<rt>たが</rt></ruby>いの<ruby>名前<rt>なまえ</rt></ruby>の<ruby>文字数<rt>もじかず</rt></ruby>を<ruby>足<rt>た</rt></ruby>すといくつになる？",
+        "３<ruby>文字<rt>もじ</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>を、<ruby>交互<rt>こうご</rt></ruby>に３つずつ<ruby>言<rt>い</rt></ruby>ってみよう",
+        "「あ」から<ruby>始<rt>はじ</rt></ruby>まる<ruby>冷<rt>つめ</rt></ruby>たいものを<ruby>教<rt>おし</rt></ruby>え<ruby>合<rt>あ</rt></ruby>おう",
+        "しりとりを３<ruby>往復<rt>おうふく</rt></ruby>しよう（<ruby>最初<rt>さいしょ</rt></ruby>は「あさ」から！）",
+        "「き」から<ruby>始<rt>はじ</rt></ruby>まる<ruby>動物<rt>どうぶつ</rt></ruby>を２つずつ<ruby>言<rt>い</rt></ruby>ってみよう",
+        "<ruby>早口<rt>はやくち</rt></ruby><ruby>言葉<rt>ことば</rt></ruby>「<ruby>生麦<rt>なまむぎ</rt></ruby><ruby>生米<rt>なまごめ</rt></ruby><ruby>生卵<rt>なまたまご</rt></ruby>」を３<ruby>回<rt>かい</rt></ruby><ruby>言<rt>い</rt></ruby>ってみよう！",
+        "１〜３０を<ruby>数<rt>かぞ</rt></ruby>えて、３の<ruby>倍数<rt>ばいすう</rt></ruby>の<ruby>時<rt>とき</rt></ruby>だけ<ruby>手<rt>て</rt></ruby>を<ruby>叩<rt>たた</rt></ruby>こう",
+        "「あ」を<ruby>使<rt>つか</rt></ruby>わずに、<ruby>今日<rt>きょう</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>ごはんを<ruby>説明<rt>せつめい</rt></ruby>してみよう",
+        "<ruby>日本語<rt>にほんご</rt></ruby><ruby>以外<rt>いがい</rt></ruby>のあいさつを３つ<ruby>教<rt>おし</rt></ruby>え<ruby>合<rt>あ</rt></ruby>おう",
+        "<ruby>逆<rt>さか</rt></ruby>さ<ruby>言葉<rt>ことば</rt></ruby>クイズ！「んこんい」はなーんだ？（<ruby>正解<rt>せいかい</rt></ruby>：いんこ）",
+        "100<ruby>万円<rt>まんえん</rt></ruby>あったら、<ruby>今日中<rt>きょうじゅう</rt></ruby>に<ruby>何<rt>なに</rt></ruby>に<ruby>使<rt>つか</rt></ruby>う？",
+        "<ruby>宇宙人<rt>うちゅうじん</rt></ruby>と<ruby>会<rt>あ</rt></ruby>ったら、<ruby>最初<rt>さいしょ</rt></ruby>に<ruby>何<rt>なに</rt></ruby>を<ruby>聞<rt>き</rt></ruby>く？",
+        "もし<ruby>自分<rt>じぶん</rt></ruby>が<ruby>新種<rt>しんしゅ</rt></ruby>の<ruby>昆虫<rt>こんちゅう</rt></ruby>を<ruby>発見<rt>はっけん</rt></ruby>したら、どんな<ruby>名前<rt>なまえ</rt></ruby>をつける？",
+        "<ruby>無人島<rt>むじんとう</rt></ruby>に<ruby>持<rt>も</rt></ruby>っていくなら「ナイフ」と「ロープ」どっち？",
+        "<ruby>今<rt>いま</rt></ruby>の<ruby>気分<rt>きぶん</rt></ruby>を「<ruby>色<rt>いろ</rt></ruby>」に<ruby>例<rt>たと</rt></ruby>えると<ruby>何色<rt>なにいろ</rt></ruby>？",
+        "<ruby>一生<rt>いっしょう</rt></ruby><ruby>同<rt>おな</rt></ruby>じものしか<ruby>食<rt>た</rt></ruby>べられないとしたら<ruby>何<rt>なに</rt></ruby>にする？",
+        "ドラえもんの<ruby>道具<rt>どうぐ</rt></ruby>、一つだけもらえるなら<ruby>何<rt>なに</rt></ruby>？",
+        "タイムトラベルできるなら、<ruby>過去<rt>かこ</rt></ruby>と<ruby>未来<rt>みらい</rt></ruby>どっちに<ruby>行<rt>い</rt></ruby>きたい？",
+        "<ruby>今日<rt>きょう</rt></ruby>のラッキーカラーを<ruby>勝手<rt>かって</rt></ruby>に<ruby>決<rt>き</rt></ruby>めて<ruby>教<rt>おし</rt></ruby>え<ruby>合<rt>あ</rt></ruby>おう",
+        "<ruby>利<rt>き</rt></ruby>き<ruby>手<rt>て</rt></ruby>じゃない<ruby>方<rt>ほう</rt></ruby>の<ruby>手<rt>て</rt></ruby>で、<ruby>空中<rt>くうちゅう</rt></ruby>に<ruby>自分<rt>じぶん</rt></ruby>の<ruby>名前<rt>なまえ</rt></ruby>を<ruby>書<rt>か</rt></ruby>いてみよう",
+        "<ruby>指<rt>ゆび</rt></ruby>スマ（いっせーのーで！）で３<ruby>回<rt>かい</rt></ruby><ruby>勝負<rt>しょうぶ</rt></ruby>！",
+        "<ruby>座<rt>すわ</rt></ruby>ったまま、<ruby>両足<rt>りょうあし</rt></ruby>を<ruby>床<rt>ゆか</rt></ruby>から１０<ruby>秒<rt>びょう</rt></ruby><ruby>浮<rt>う</rt></ruby>かせてキープ！",
+        "<ruby>後出<rt>あとだ</rt></ruby>しジャンケン！<ruby>相手<rt>あいて</rt></ruby>に「<ruby>負<rt>ま</rt></ruby>ける」<ruby>手<rt>て</rt></ruby>を<ruby>出<rt>だ</rt></ruby>してみよう（３<ruby>回<rt>かい</rt></ruby>）",
+        "まばたきガマン<ruby>対決<rt>たいけつ</rt></ruby>！どっちが<ruby>長<rt>なが</rt></ruby>く<ruby>目<rt>め</rt></ruby>を<ruby>開<rt>あ</rt></ruby>けていられる？",
+        "お<ruby>互<rt>たが</rt></ruby>いの<ruby>手<rt>て</rt></ruby>のひらに<ruby>指<rt>ゆび</rt></ruby>で<ruby>数字<rt>すうじ</rt></ruby>を<ruby>書<rt>か</rt></ruby>いて<ruby>当<rt>あ</rt></ruby>てっこしよう",
+        "<ruby>両手<rt>りょうて</rt></ruby>で<ruby>別々<rt>べつべつ</rt></ruby>の<ruby>形<rt>かたち</rt></ruby>を<ruby>作<rt>つく</rt></ruby>ろう！（<ruby>右手<rt>みぎて</rt></ruby>はチョキ、<ruby>左手<rt>ひだりて</rt></ruby>はパーなど）",
+        "<ruby>今日<rt>きょう</rt></ruby><ruby>着<rt>き</rt></ruby>ている<ruby>服<rt>ふく</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で、<ruby>一番<rt>いちばん</rt></ruby>お<ruby>気<rt>き</rt></ruby>に<ruby>入<rt>い</rt></ruby>りのポイントは？",
+        "<ruby>教室<rt>きょうしつ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>にある「カタカナ」の<ruby>名前<rt>なまえ</rt></ruby>のものを３つ<ruby>探<rt>さが</rt></ruby>そう",
+        "<ruby>空中<rt>くうちゅう</rt></ruby>で<ruby>図形<rt>ずけい</rt></ruby>を<ruby>描<rt>か</rt></ruby>いて、<ruby>何<rt>なに</rt></ruby>を<ruby>描<rt>か</rt></ruby>いたか<ruby>当<rt>あ</rt></ruby>てっこしよう",
+        "<ruby>深呼吸<rt>しんこきゅう</rt></ruby>を３<ruby>回<rt>かい</rt></ruby>して、リラックスしよう！"
     ];
 
     let timeLeft = 50;
@@ -205,7 +206,7 @@
     // ④ 選んだ瞬間にパネルを自動で閉じる
     function setReservation() {
         reservedTask = document.getElementById('reserve-select').value;
-        document.getElementById('reservation-status').innerText = reservedTask ? "※次回はこれを必ず出します" : "";
+        document.getElementById('reservation-status').innerHTML = reservedTask ? "※<ruby>次回<rt>じかい</rt></ruby>はこれを<ruby>必<rt>かなら</rt></ruby>ず<ruby>出<rt>だ</rt></ruby>します" : "";
         document.getElementById('reservation-panel').style.display = 'none';
     }
 
@@ -222,21 +223,21 @@
 
         let count = 0;
         let shuffle = setInterval(() => {
-            display.innerText = tasks[Math.floor(Math.random() * tasks.length)];
+            display.innerHTML = tasks[Math.floor(Math.random() * tasks.length)];
             count++;
             if (count > 15) {
                 clearInterval(shuffle);
                 if (reservedTask !== "") {
-                    display.innerText = reservedTask;
+                    display.innerHTML = reservedTask;
                     reservedTask = "";
                     document.getElementById('reserve-select').value = "";
-                    document.getElementById('reservation-status').innerText = "";
+                    document.getElementById('reservation-status').innerHTML = "";
                 } else {
-                    display.innerText = tasks[Math.floor(Math.random() * tasks.length)];
+                    display.innerHTML = tasks[Math.floor(Math.random() * tasks.length)];
                 }
                 startTimer();
                 // ① タイマースタートと同時におまけを表示
-                document.getElementById('bonus-task').innerText = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
+                document.getElementById('bonus-task').innerHTML = bonusTasks[Math.floor(Math.random() * bonusTasks.length)];
                 document.getElementById('bonus').style.display = 'block';
             }
         }, 100);
