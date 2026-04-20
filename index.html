@@ -29,7 +29,8 @@
         #reservation-status { font-size: 0.8rem; color: var(--danger); margin-top: 5px; min-height: 1.2em; }
 
         /* 抽選エリア */
-        #display { font-size: 2.5rem; font-weight: bold; height: 120px; display: flex; align-items: center; justify-content: center; border: 4px dashed #ddd; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); }
+        #display { font-size: 2.5rem; font-weight: bold; min-height: 120px; display: flex; align-items: center; justify-content: center; border: 4px dashed #ddd; border-radius: 15px; margin-bottom: 20px; padding: 10px; color: var(--primary); }
+        .display-text { display: block; text-align: center; line-height: 2.0; }
 
         /* タイマーエリア */
         #timer-container { position: relative; width: 100%; height: 120px; margin: 20px 0; }
@@ -80,7 +81,7 @@
         <div id="reservation-status"></div>
     </div>
 
-    <div id="display">ボタンをおしてね！</div>
+    <div id="display"><div class="display-text">ボタンをおしてね！</div></div>
 
     <div id="timer-container">
         <div id="timer-text">50</div>
@@ -221,19 +222,20 @@
         startBtn.style.visibility = 'hidden';
         stopBtn.style.visibility = 'visible';
 
+        const wrap = html => `<div class="display-text">${html}</div>`;
         let count = 0;
         let shuffle = setInterval(() => {
-            display.innerHTML = tasks[Math.floor(Math.random() * tasks.length)];
+            display.innerHTML = wrap(tasks[Math.floor(Math.random() * tasks.length)]);
             count++;
             if (count > 15) {
                 clearInterval(shuffle);
                 if (reservedTask !== "") {
-                    display.innerHTML = reservedTask;
+                    display.innerHTML = wrap(reservedTask);
                     reservedTask = "";
                     document.getElementById('reserve-select').value = "";
                     document.getElementById('reservation-status').innerHTML = "";
                 } else {
-                    display.innerHTML = tasks[Math.floor(Math.random() * tasks.length)];
+                    display.innerHTML = wrap(tasks[Math.floor(Math.random() * tasks.length)]);
                 }
                 startTimer();
                 // ① タイマースタートと同時におまけを表示
@@ -324,7 +326,7 @@
         document.getElementById('bonus').style.display = 'none';
         document.getElementById('timer-text').innerText = maxTime;
         document.getElementById('timer-meter').style.width = '100%';
-        document.getElementById('display').innerText = "ボタンをおしてね！";
+        document.getElementById('display').innerHTML = '<div class="display-text">ボタンをおしてね！</div>';
         document.getElementById('startBtn').style.visibility = 'visible';
         document.getElementById('stopBtn').style.visibility = 'hidden';
     }
